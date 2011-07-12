@@ -1,14 +1,7 @@
-cyrconplex
-==========
+Sparanoid Start Page
+====================
 
-[Jekyll][jk] runing on [sparanoid.com][sp], Codename cyrconplex, version 16.
-
-
-Instructions
-------------
-
-* I don't suppose you're stupid.
-
+A start page for my Safari home page, hosted on [sparanoid.com][sp], powered by [Jekyll][jk]. Fork it and create your own.
 
 License
 -------
