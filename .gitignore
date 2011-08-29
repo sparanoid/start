@@ -4,7 +4,7 @@
 _site
 *.min.css
 *.min.js
-# Rakefile
+Rakefile
 
 # Mac OS X files
 .DS_Store
