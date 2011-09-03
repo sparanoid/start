@@ -23,7 +23,7 @@
 	line-height: 1.7;
 	max-width: 960px;
 	margin: 0 auto;
-	padding: 80px 120px;
+	padding: 75px 120px;
     -webkit-perspective: 200;
     -moz-perspective: 200;
     perspective: 200;
@@ -218,9 +218,24 @@ footer {
 	}
 }
 
-@media (max-device-width: 480px) { 
+@media only screen and (max-device-width: 480px) { 
 	:root {
 		-webkit-text-size-adjust: none;
 		padding: 50px 20px;
+	}
+}
+
+@media only screen and (max-device-width: 480px),
+only screen and (min-device-width: 768px) and (max-device-width: 1024px) { 
+	:root {
+		color: rgba(255, 255, 255, .3);
+		background: #000;
+	}
+	a {
+		color: #fff;
+		background: rgba(255, 255, 0, 0);
+	}
+	h1:before {
+		border-color: #fff;
 	}
 }
