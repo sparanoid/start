@@ -23,7 +23,7 @@
 	line-height: 1.7;
 	max-width: 960px;
 	margin: 0 auto;
-	padding: 50px 90px;
+	padding: 80px 120px;
     -webkit-perspective: 200;
     -moz-perspective: 200;
     perspective: 200;
@@ -44,7 +44,7 @@ a {
 	}
 
 header, article, footer, h2 {
-	padding-bottom: 40px;
+	padding-bottom: 30px;
 }
 
 h1, article, footer {
@@ -60,7 +60,7 @@ h1, article, footer {
 h1 {
 	position: relative;
 	font-weight: 100;
-	font-size: 45px;
+	font-size: 36px;
 	line-height: 1;
 	margin-left: -4px;
 	-webkit-animation-delay: 0.55s;
@@ -71,13 +71,13 @@ h1 {
 	h1:before {
 		position: absolute;
 		top: 3px;
-		left: -60px;
+		left: -50px;
 		display: block;
 		content: ' ';
-		width: 30px;
-		height: 30px;
+		width: 24px;
+		height: 24px;
 		border-radius: 80px;
-		border: 6px #000 solid;
+		border: 5px #000 solid;
 	}
 
 h2, footer, article p {
@@ -99,6 +99,7 @@ article {
 }
 	article:nth-of-type(1) {
 		-webkit-animation-delay: .6s;
+/*		normal speed * 20x */
 /*		-webkit-animation-delay: 18s;*/
 		-moz-animation-delay: .6s;
 		animation-delay: .6s;
@@ -136,19 +137,19 @@ article {
 
 	article ul {
 		list-style: none;
-		-webkit-column-width: 225px;
+		-webkit-column-width: 180px;
 		-webkit-column-gap: 20px;
-		-moz-column-width: 225px;
+		-moz-column-width: 180px;
 		-moz-column-gap: 20px;
-		column-width: 225px;
+		column-width: 180px;
 		column-gap: 20px;
 	}
 
 footer {
-	-webkit-animation-delay: 0.9s;
-/*	-webkit-animation-delay: 27s;*/
-	-moz-animation-delay: 0.9s;
-	animation-delay: 0.9s;
+	-webkit-animation-delay: .8s;
+/*	-webkit-animation-delay: 24s;*/
+	-moz-animation-delay: .8s;
+	animation-delay: .8s;
 }
 
 @-webkit-keyframes spin {
@@ -207,11 +208,19 @@ footer {
 	background: rgba(255, 255, 0, .8);
 }
 
-@media print,
-		screen and (max-device-width: 480px),
-		(min-device-width: 1024px) and (max-width: 959px),
-		(max-device-width: 480px) and (orientation: landscape),
-		(min-device-width: 481px) and (max-device-width: 1024px) and (orientation: portrait) {
-	* {}
-	:root {-webkit-text-size-adjust: none;}
+@media screen and (max-width: 240px) { 
+	:root * {
+		display: none;
+	}
+	:root:before {
+		content: "WTF?";
+		line-height: 2em;
+	}
+}
+
+@media (max-device-width: 480px) { 
+	:root {
+		-webkit-text-size-adjust: none;
+		padding: 50px 20px;
+	}
 }
