@@ -6,7 +6,7 @@ destination: ./_site
 markdown: rdiscount
 
 # site url
-url: sparanoid.com/start
+url: sparanoid.com/lab/start
 
 # used by images inserted in posts
 file: http://rsrc.sparanoid.com
