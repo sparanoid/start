@@ -112,7 +112,7 @@ article {
             animation-delay: .65s;
   }
   article:nth-of-type(3) {
-    /*    -webkit-animation-delay: 21s;*/
+/*    -webkit-animation-delay: 21s;*/
     -webkit-animation-delay: .7s;
        -moz-animation-delay: .7s;
             animation-delay: .7s;
