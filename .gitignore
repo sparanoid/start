@@ -6,6 +6,9 @@ _site
 *.min.js
 Rakefile
 
+# Codekit specified
+codekit-config.json
+
 # Mac OS X files
 .DS_Store
 
@@ -15,7 +18,4 @@ Rakefile
 
 # Logs, Leftovers
 *.log
-!errors.log
 *.bak
-*.tmproj
-*.esproj
