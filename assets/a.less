@@ -71,12 +71,11 @@
   line-height: 1.7;
   margin: 0 auto;
   padding: 75px 120px 30px;
-  .perspective(200);
+  .perspective(120);
+  -webkit-perspective-origin: 30% 30%;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   -webkit-font-smoothing: antialiased;
-  //-webkit-perspective-origin-x: 0%;
-  //-webkit-perspective-origin-y: 10%;
 }
 
 body {
@@ -113,7 +112,6 @@ h1 {
     display: block;
     content: '';
     background: url("data:image/svg+xml,<svg id='logo' width='37px' height='43px' xmlns='http://www.w3.org/2000/svg' version='1.1'><path d='M18.5,0.171L0.021,10.839v21.337L18.5,42.845l18.479-10.669V10.839L18.5,0.171z M27.043,26.377l-8.542,4.867L9.96,26.377 v-9.734l8.541-4.866l8.542,4.866V26.377z'/></svg>") no-repeat 0 0;
-    // background-size: 38px 38px;
   }
 }
 
@@ -163,43 +161,43 @@ body.in {
     .transform-origin(0 0);
     .transform-origin(-100px 0);
     -webkit-transform-style: preserve-3d;
-    .animation(spin .8s 1 ease backwards);
-    //.animation(spin 24s 1 ease backwards);
+    .animation(spin 1.2s 1 ease backwards);
+    // .animation(spin 24s 1 ease backwards);
   }
   h1 {
-    .animation-delay(.55s);
-    //.animation-delay(16.5s);
+    .animation-delay(0ms);
+    // .animation-delay(16.5s);
   }
   h2 {
     .animation(txt .4s 1 ease backwards);
-    //.animation(txt 90s 1 ease backwards);
+    // .animation(txt 90s 1 ease backwards);
     .animation-delay(2.4s);
   }
   article {
     &:nth-of-type(1) {
-      .animation-delay(.6s);
+      .animation-delay(80ms);
       //normal speed * 20x
-      //.animation-delay(18s);
+      // .animation-delay(18s);
     }
     &:nth-of-type(2) {
-      .animation-delay(.65s);
-      //.animation-delay(19.5s);
+      .animation-delay(160ms);
+      // .animation-delay(19.5s);
     }
     &:nth-of-type(3) {
-      .animation-delay(.7s);
-      //.animation-delay(21s);
+      .animation-delay(240ms);
+      // .animation-delay(21s);
     }
     &:nth-of-type(4) {
-      .animation-delay(.75s);
-      //.animation-delay(22.5s);
+      .animation-delay(320ms);
+      // .animation-delay(22.5s);
     }
     &:nth-of-type(5) {
-      .animation-delay(.8s);
-      //.animation-delay(24s);
+      .animation-delay(400ms);
+      // .animation-delay(24s);
     }
     &:nth-of-type(6) {
-      .animation-delay(.85s);
-      //.animation-delay(25.5s);
+      .animation-delay(480ms);
+      // .animation-delay(25.5s);
     }
     ul {
       list-style: none;
@@ -209,8 +207,8 @@ body.in {
   }
 
   footer {
-    .animation-delay(.8s);
-    //.animation-delay(24s);
+    .animation-delay(400ms);
+    // .animation-delay(24s);
   }
 }
 
@@ -223,7 +221,7 @@ body.in {
   z-index: 999999;
   -webkit-transition: -webkit-transform .5s ease, opacity .4s ease;
   -webkit-transform: scale(1.75);
-  -webkit-transition-delay: 1.6s;
+  -webkit-transition-delay: 800ms;
   -webkit-backface-visibility: hidden;
   &.in {
     opacity: 1;
@@ -253,15 +251,6 @@ body.in {
 
 // ios
 @media (max-device-width: 480px), (min-device-width: 768px) and (max-device-width: 1024px) {
-  :root {
-    color: rgba(255, 255, 255, .3);
-    background: #000;
-  }
-  a {
-    color: #fff;
-    background: rgba(255, 255, 0, 0);
-  }
-  h1:before {
-    -webkit-filter: invert(100%);
-  }
+  // invert color switcher for images and videos, not implemented yet
+  // :root { -webkit-filter: invert(100%); }
 }
