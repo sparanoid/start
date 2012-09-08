@@ -1,6 +1,5 @@
 // animation
 $(window).load(function() {
-  // hide the pins
   $("body").addClass("in");
   $("#spinner").removeClass("in");
 });
