@@ -71,6 +71,8 @@
   line-height: 1.7;
   margin: 0 auto;
   padding: 75px 120px 30px;
+  // height: 100%;
+  overflow: hidden;
   .perspective(120);
   -webkit-perspective-origin: 30% 30%;
   -webkit-user-select: none;
@@ -80,6 +82,9 @@
 
 body {
   opacity: 0; // visible when page fully loaded
+  header, article, footer {
+    display: none; // hide all the elements at the beginning to avoid extra height
+  }
 }
 
 a {
@@ -130,6 +135,10 @@ h2, footer, article p {
 // animations
 body.in {
   opacity: 1;
+
+  header, article, footer {
+    display: block;
+  }
 
   @-webkit-keyframes spin {
     0%   {-webkit-transform: rotateY(-180deg);}
