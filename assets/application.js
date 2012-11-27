@@ -1,10 +1,15 @@
-// animation
+$('a[rel=external]').click(function() {
+  window.open( $(this).attr('href') );
+  return false;
+});
+
+// Animation
 $(window).load(function() {
   $("body").addClass("in");
   $("#spinner").removeClass("in");
 });
 
-// enable :active, easy method
+// Enable :active for iOS, easy method
 document.addEventListener("touchstart", function(){}, true);
 
 // .js spinner
