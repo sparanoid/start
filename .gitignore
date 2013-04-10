@@ -1,20 +1,18 @@
-# TUNGHSIAO LIU'S FAVORITE GITIGNORE
-
-# Jekyll specified
-_site
-*.css
-Rakefile
-
-# Codekit specified
-codekit-config.json
-
-# Mac OS X files
-.DS_Store
-
-# Image, font original files
-*.psd
-*.ai
-
-# Logs, Leftovers
+lib-cov
+*.seed
 *.log
-*.bak
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+pids
+logs
+results
+
+npm-debug.log
+
+node_modules
+tmp
+build
