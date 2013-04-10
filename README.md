@@ -1,7 +1,7 @@
 Sparanoid Start
 ===============
 
-Start Page for your browser. The best browser homepage in the world, probably.
+Start Page for your browser. Probably the best browser homepage in the world.
 
 Author
 ------
