@@ -1,5 +1,5 @@
 node_modules
+dist
+.tmp
+app/bower_components
 *.log
-
-# ./_source/css/a.css
-a.css
