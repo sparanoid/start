@@ -202,13 +202,13 @@ module.exports = (grunt) ->
       dist: ["htmlmin", "cssmin", "imagemin"]
 
     clean:
+      server: ".tmp"
+
       dist:
         files: [
           dot: true
           src: [".tmp", "<%= core.dist %>/*", "!<%= core.dist %>/.git*"]
         ]
-
-      server: ".tmp"
 
       sync:
         options:
