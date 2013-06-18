@@ -1,0 +1,249 @@
+.perspective (@var: 200) {
+  -webkit-perspective: @arguments;
+     -moz-perspective: @arguments;
+          perspective: @arguments;
+}
+
+.animation (@var) {
+  -webkit-animation: @arguments;
+     -moz-animation: @arguments;
+          animation: @arguments;
+}
+
+.animation-delay (@var) {
+  -webkit-animation-delay: @arguments;
+     -moz-animation-delay: @arguments;
+          animation-delay: @arguments;
+}
+
+.transform-origin (@var) {
+  -webkit-transform-origin: @arguments;
+     -moz-transform-origin: @arguments;
+          transform-origin: @arguments;
+}
+
+.column-width (@var) {
+  -webkit-column-width: @arguments;
+     -moz-column-width: @arguments;
+          column-width: @arguments;
+}
+
+.column-gap (@var) {
+  -webkit-column-gap: @arguments;
+     -moz-column-gap: @arguments;
+          column-gap: @arguments;
+}
+
+// Absolute Centered (Vertical & Horizontal) Element LESS Mixin
+// http://codepen.io/sparanoid/pen/mcfvb
+
+.centered(@width, @height, @padding) {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: @width;
+  height: @height;
+  margin-top: -@height / 2 - @padding;
+  margin-left: -@width / 2 - @padding;
+  padding: @padding;
+}
+
+// Basic reset
+p, hr, pre, blockquote,
+ol, ul, li, dl, dt, dd,
+a, em, strong, small, s, cite, q, dfn, abbr, time, code, var, i, b, u, span, br, wbr,
+h1, h2, h3, h4, h5, h6 {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  // line-height: 1;
+}
+
+:root {
+  // height: 100%;
+  padding: 75px 120px 30px;
+  margin: 0 auto;
+  font-family: 'Hiragino Mincho ProN', serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.7;
+  color: rgba(0, 0, 0, .3);
+  //color: rgba(255, 255, 255, .3);
+  background: #fff;
+  //background: #000;
+  -webkit-user-select: none;
+  .perspective(120);
+  -webkit-perspective-origin: 30% 30%;
+  -webkit-touch-callout: none;
+}
+
+body {
+  opacity: 0; // visible when page fully loaded
+  header, article, footer {
+    display: none; // hide all the elements at the beginning to avoid extra height
+  }
+}
+
+a {
+  color: #000;
+  //color: #fff;
+  text-decoration: none;
+  background: rgba(255, 255, 0, 0);
+
+  &:hover {
+    color: #000;
+    background: rgba(255, 255, 0, 1);
+    border-bottom: 1px dotted rgba(0, 0, 0, .5);
+  }
+}
+
+header, article, footer, h2 {
+  padding-bottom: 30px;
+}
+
+h1 {
+  position: relative;
+  margin-left: -4px;
+  font-size: 36px;
+  font-weight: 100;
+  line-height: 1;
+}
+
+h2, footer, article p {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+::selection {
+  color: #000;
+  background: rgba(255, 255, 0, .8);
+}
+
+// animations
+.in {
+  opacity: 1;
+
+  header, article, footer {
+    display: block;
+  }
+
+  @-webkit-keyframes spin {
+    0%   {-webkit-transform: rotateY(-180deg);}
+    100% {-webkit-transform: rotateY(0deg);}
+  }
+
+  @-moz-keyframes spin {
+    0%   {-moz-transform: rotateY(-180deg);}
+    100% {-moz-transform: rotateY(0deg);}
+  }
+
+  @keyframes spin {
+    0%   {transform: rotateY(-180deg);}
+    100% {transform: rotateY(0deg);}
+  }
+
+  @-webkit-keyframes txt {
+    0%   {opacity: 0;}
+    100% {opacity: 100;}
+  }
+
+  @-moz-keyframes txt {
+    0%   {opacity: 0;}
+    100% {opacity: 100;}
+  }
+
+  @keyframes txt {
+    0%   {opacity: 0;}
+    100% {opacity: 100;}
+  }
+
+  h1, article, footer {
+    .animation(spin 1.2s 1 ease backwards);
+    -webkit-transform-style: preserve-3d;
+    .transform-origin(0 0);
+    .transform-origin(-100px 0);
+    // .animation(spin 24s 1 ease backwards);
+  }
+
+  h1 {
+    .animation-delay(0ms);
+    // .animation-delay(16.5s);
+  }
+
+  h2 {
+    .animation(txt .4s 1 ease backwards);
+    // .animation(txt 90s 1 ease backwards);
+    .animation-delay(2.4s);
+  }
+
+  article {
+    &:nth-of-type(1) {
+      .animation-delay(80ms);
+      //normal speed * 20x
+      // .animation-delay(18s);
+    }
+
+    &:nth-of-type(2) {
+      .animation-delay(160ms);
+      // .animation-delay(19.5s);
+    }
+
+    &:nth-of-type(3) {
+      .animation-delay(240ms);
+      // .animation-delay(21s);
+    }
+
+    &:nth-of-type(4) {
+      .animation-delay(320ms);
+      // .animation-delay(22.5s);
+    }
+
+    &:nth-of-type(5) {
+      .animation-delay(400ms);
+      // .animation-delay(24s);
+    }
+
+    &:nth-of-type(6) {
+      .animation-delay(480ms);
+      // .animation-delay(25.5s);
+    }
+
+    ul {
+      list-style: none;
+      .column-width(180px);
+      .column-gap(20px);
+    }
+  }
+
+  footer {
+    .animation-delay(400ms);
+    // .animation-delay(24s);
+  }
+}
+
+// wtf
+@media screen and (max-width: 240px) {
+  :root * {
+    display: none;
+  }
+  :root:before {
+    content: "WTF?";
+    line-height: 2em;
+  }
+}
+
+// iphone
+@media (max-device-width: 480px) {
+  :root {
+    -webkit-text-size-adjust: none;
+    padding: 50px 20px;
+  }
+}
+
+// ios
+@media (max-device-width: 480px), (min-device-width: 768px) and (max-device-width: 1024px) {
+  // invert color switcher for images and videos, not implemented yet
+  // :root { -webkit-filter: invert(100%); }
+}
