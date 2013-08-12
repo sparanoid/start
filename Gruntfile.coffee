@@ -1,4 +1,6 @@
 "use strict"
+LIVERELOAD_PORT = 35728
+lrSnippet = require("connect-livereload")(port: LIVERELOAD_PORT)
 mountFolder = (connect, dir) ->
   connect.static require("path").resolve(dir)
 
@@ -11,7 +13,6 @@ module.exports = (grunt) ->
   # Configurable paths
   coreConfig =
     pkg: grunt.file.readJSON("package.json")
-    bower: grunt.file.readJSON(".bowerrc")
     app: "app"
     dist: "dist"
     banner: do ->
@@ -44,39 +45,19 @@ module.exports = (grunt) ->
     recess:
       test:
         files:
-          src: ["<%= core.app %>/assets/less/**/*.less"]
-
-    jshint:
-      options:
-        jshintrc: ".jshintrc"
-
-      all: ["<%= core.app %>/assets/js/**/*.js", "!<%= core.app %>/assets/js/vendor/*", "test/spec/**/*.js"]
-
-    watch:
-      options:
-        nospawn: true
-
-      coffee:
-        files: ["<%= coffeelint.test.files.src %>"]
-        tasks: ["coffeelint"]
-
-      less:
-        files: ["<%= recess.test.files.src %>"]
-        tasks: ["less:server", "recess"]
-
-      js:
-        files: ["<%= core.app %>/assets/js/app.js"]
-        tasks: ["uglify:server"]
+          src: ["<%= core.app %>/assets/less/main.less"]
 
     connect:
       options:
         port: 9000
+
+        # change this to "0.0.0.0" to access the server from outside
         hostname: "0.0.0.0"
 
-      server:
+      livereload:
         options:
           middleware: (connect) ->
-            [mountFolder(connect, ".tmp"), mountFolder(connect, coreConfig.app)]
+            [lrSnippet, mountFolder(connect, ".tmp"), mountFolder(connect, coreConfig.app)]
 
       test:
         options:
@@ -88,42 +69,36 @@ module.exports = (grunt) ->
           middleware: (connect) ->
             [mountFolder(connect, coreConfig.dist)]
 
+    watch:
+      coffee:
+        files: ["<%= coffeelint.test.files.src %>"]
+        tasks: ["coffeelint"]
+
+      less:
+        files: ["<%= recess.test.files.src %>"]
+        tasks: ["less:server", "recess"]
+
+      livereload:
+        options:
+          livereload: LIVERELOAD_PORT
+
+        files: ["<%= core.app %>/*.html", "{.tmp,<%= core.app %>}/assets/css/{,*/}*.css", "{.tmp,<%= core.app %>}/assets/js/{,*/}*.js", "<%= core.app %>/assets/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
+
     less:
       server:
         options:
-          paths: ["<%= core.app %>/assets/less"]
-          # Known issue: https://github.com/gruntjs/grunt-contrib-less/issues/57
-          # dumpLineNumbers: "all"
+          paths: ["<%= core.app %>"]
+          dumpLineNumbers: "all"
 
         files:
           ".tmp/assets/css/main.css": ["<%= core.app %>/assets/less/main.less"]
 
       dist:
         options:
-          paths: ["<%= core.app %>/assets/less"]
+          paths: ["<%= core.app %>"]
 
         files:
           "<%= core.dist %>/assets/css/main.css": ["<%= core.app %>/assets/less/main.less"]
-
-    uglify:
-      server:
-        options:
-          # TODO: Not implemented
-          sourceMap: ".tmp/assets/js/app.js.map"
-          # sourceMapRoot: ""
-          # sourceMappingURL: ""
-
-        files:
-          ".tmp/assets/js/app.min.js": ["<%= core.bower.directory %>/jquery/jquery.js", "<%= core.app %>/assets/js/app.js"]
-
-      dist:
-        options:
-          banner: "<%= core.banner %>"
-          compress: true
-          report: "gzip"
-
-        files:
-          "<%= core.dist %>/assets/js/app.min.js": ["<%= core.bower.directory %>/jquery/jquery.js", "<%= core.app %>/assets/js/app.js"]
 
     htmlmin:
       dist:
@@ -131,7 +106,7 @@ module.exports = (grunt) ->
           removeComments: true
           removeCommentsFromCDATA: true
           removeCDATASectionsFromCDATA: true
-          collapseWhitespace: false
+          collapseWhitespace: true
           collapseBooleanAttributes: true
           removeAttributeQuotes: true
           removeRedundantAttributes: true
@@ -147,15 +122,6 @@ module.exports = (grunt) ->
           dest: "<%= core.dist %>/"
         ]
 
-    xmlmin:
-      dist:
-        files: [
-          expand: true
-          cwd: "<%= core.app %>"
-          src: "**/*.xml"
-          dest: "<%= core.dist %>/"
-        ]
-
     cssmin:
       dist:
         options:
@@ -165,28 +131,16 @@ module.exports = (grunt) ->
         files:
           "<%= core.dist %>/assets/css/main.css": ["<%= core.dist %>/assets/css/main.css"]
 
-    imagemin:
+    uglify:
       dist:
         options:
-          optimizationLevel: 6
+          banner: "<%= core.banner %>"
+          report: "gzip"
 
-        files: [
-          expand: true
-          cwd: "<%= core.app %>/assets/img"
-          src: "{,*/}*.{png,jpg,jpeg}"
-          dest: "<%= core.dist %>/assets/img"
-        ]
+        files:
+          "<%= core.dist %>/assets/js/main.js": ["<%= core.app %>/assets/js/main.js"]
 
     copy:
-      dist:
-        files: [
-          expand: true
-          dot: true
-          cwd: "<%= core.app %>"
-          dest: "<%= core.dist %>"
-          src: ["*.{ico,png,txt}", ".htaccess", "assets/img/**/*.{webp,gif}", "assets/font/*"]
-        ]
-
       sync:
         files: [
           expand: true
@@ -196,18 +150,11 @@ module.exports = (grunt) ->
           dest: "/Users/sparanoid/Dropbox/Sites/sparanoid.com/lab/<%= core.pkg.name %>/"
         ]
 
-    concurrent:
-      server: ["watch"]
-
-      dist: ["htmlmin", "cssmin", "imagemin"]
-
     clean:
-      server: ".tmp"
-
       dist:
         files: [
           dot: true
-          src: [".tmp", "<%= core.dist %>/*", "!<%= core.dist %>/.git*"]
+          src: [".tmp", "<%= core.dist %>/*"]
         ]
 
       sync:
@@ -218,8 +165,18 @@ module.exports = (grunt) ->
           src: "/Users/sparanoid/Dropbox/Sites/sparanoid.com/lab/<%= core.pkg.name %>/"
         ]
 
-  grunt.registerTask "server", ["clean:server", "less:server", "uglify:server", "connect:server", "concurrent:server"]
+    concurrent:
+      options:
+        logConcurrentOutput: true
+
+      server:
+        tasks: ["less:server"]
+
+      dist:
+        tasks: ["htmlmin", "cssmin", "uglify"]
+
+  grunt.registerTask "server", ["connect:livereload", "concurrent:server", "watch"]
   grunt.registerTask "test", ["coffeelint", "recess"]
-  grunt.registerTask "build", ["clean:dist", "test", "less:dist", "uglify:dist", "concurrent:dist", "copy"]
+  grunt.registerTask "build", ["clean:dist", "test", "less:dist", "concurrent:dist"]
   grunt.registerTask "sync", ["build", "clean:sync", "copy:sync"]
   grunt.registerTask "default", ["build"]
