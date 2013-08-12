@@ -32,6 +32,7 @@
     "grunt-contrib-less": "~0.7.0",
     "grunt-contrib-uglify": "~0.2.2",
     "grunt-contrib-watch": "~0.5.1",
+    "grunt-autoprefixer": "~0.2.20130806",
     "grunt-coffeelint": "0.0.7",
     "grunt-concurrent": "~0.3.0",
     "grunt-recess": "~0.3.4",
