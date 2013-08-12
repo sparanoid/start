@@ -38,9 +38,13 @@ module.exports = (grunt) ->
         max_line_length:
           level: "ignore"
 
-      test:
+      gruntfile:
         files:
           src: ["Gruntfile.coffee"]
+
+      test:
+        files:
+          src: ["<%= core.app %>/assets/coffee/main.coffee"]
 
     recess:
       test:
@@ -70,6 +74,10 @@ module.exports = (grunt) ->
             [mountFolder(connect, coreConfig.dist)]
 
     watch:
+      grunt:
+        files: ["<%= coffeelint.gruntfile.files.src %>"]
+        tasks: ["coffeelint"]
+
       coffee:
         files: ["<%= coffeelint.test.files.src %>"]
         tasks: ["coffeelint"]
@@ -83,6 +91,18 @@ module.exports = (grunt) ->
           livereload: LIVERELOAD_PORT
 
         files: ["<%= core.app %>/*.html", "{.tmp,<%= core.app %>}/assets/css/{,*/}*.css", "{.tmp,<%= core.app %>}/assets/js/{,*/}*.js", "<%= core.app %>/assets/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
+
+    coffee:
+      server:
+        options:
+          sourceMap: true
+
+        files:
+          ".tmp/assets/js/main.js": ["<%= core.app %>/assets/coffee/main.coffee"]
+
+      dist:
+        files:
+          "<%= core.dist %>/assets/js/main.js": ["<%= core.app %>/assets/coffee/main.coffee"]
 
     less:
       server:
@@ -138,7 +158,7 @@ module.exports = (grunt) ->
           report: "gzip"
 
         files:
-          "<%= core.dist %>/assets/js/main.js": ["<%= core.app %>/assets/js/main.js"]
+          "<%= core.dist %>/assets/js/main.js": ["<%= core.dist %>/assets/js/main.js"]
 
     copy:
       sync:
@@ -170,13 +190,13 @@ module.exports = (grunt) ->
         logConcurrentOutput: true
 
       server:
-        tasks: ["less:server"]
+        tasks: ["less:server", "coffee:server"]
 
       dist:
         tasks: ["htmlmin", "cssmin", "uglify"]
 
   grunt.registerTask "server", ["connect:livereload", "concurrent:server", "watch"]
   grunt.registerTask "test", ["coffeelint", "recess"]
-  grunt.registerTask "build", ["clean:dist", "test", "less:dist", "concurrent:dist"]
+  grunt.registerTask "build", ["clean:dist", "test", "less:dist", "coffee:dist", "concurrent:dist"]
   grunt.registerTask "sync", ["build", "clean:sync", "copy:sync"]
   grunt.registerTask "default", ["build"]
