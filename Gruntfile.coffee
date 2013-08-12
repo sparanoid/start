@@ -84,7 +84,7 @@ module.exports = (grunt) ->
 
       less:
         files: ["<%= recess.test.files.src %>"]
-        tasks: ["less:server", "recess"]
+        tasks: ["less:server", "recess", "autoprefixer:server"]
 
       livereload:
         options:
@@ -108,7 +108,7 @@ module.exports = (grunt) ->
       server:
         options:
           paths: ["<%= core.app %>"]
-          dumpLineNumbers: "all"
+          # dumpLineNumbers: "all"
 
         files:
           ".tmp/assets/css/main.css": ["<%= core.app %>/assets/less/main.less"]
@@ -119,6 +119,15 @@ module.exports = (grunt) ->
 
         files:
           "<%= core.dist %>/assets/css/main.css": ["<%= core.app %>/assets/less/main.less"]
+
+    autoprefixer:
+      server:
+        files:
+          ".tmp/assets/css/main.css": [".tmp/assets/css/main.css"]
+
+      dist:
+        files:
+          "<%= core.dist %>/assets/css/main.css": ["<%= core.dist %>/assets/css/main.css"]
 
     htmlmin:
       dist:
@@ -195,8 +204,8 @@ module.exports = (grunt) ->
       dist:
         tasks: ["htmlmin", "cssmin", "uglify"]
 
-  grunt.registerTask "server", ["connect:livereload", "concurrent:server", "watch"]
+  grunt.registerTask "server", ["connect:livereload", "concurrent:server", "autoprefixer:server", "watch"]
   grunt.registerTask "test", ["coffeelint", "recess"]
-  grunt.registerTask "build", ["clean:dist", "test", "less:dist", "coffee:dist", "concurrent:dist"]
+  grunt.registerTask "build", ["clean:dist", "test", "less:dist", "autoprefixer:dist", "coffee:dist", "concurrent:dist"]
   grunt.registerTask "sync", ["build", "clean:sync", "copy:sync"]
   grunt.registerTask "default", ["build"]
