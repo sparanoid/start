@@ -1,4 +1,4 @@
-// Basic reset
+// Basic Reset
 p, hr, pre, blockquote,
 ol, ul, li, dl, dt, dd,
 a, em, strong, small, s, cite, q, dfn, abbr, time, code, var, i, b, u, span, br, wbr,
@@ -37,7 +37,7 @@ body {
 
 a {
   color: #000;
-  //color: #fff;
+  // color: #fff;
   text-decoration: none;
   background: rgba(255, 255, 0, 0);
 
@@ -72,7 +72,7 @@ h2, footer, article p {
   background: rgba(255, 255, 0, .8);
 }
 
-// animations
+// Animations
 .in {
   opacity: 1;
 
@@ -110,36 +110,18 @@ h2, footer, article p {
 
   article {
 
-    &:nth-of-type(1) {
-      animation-delay: 80ms;
-      //normal speed * 20x
-      // animation-delay: 18s;
+    @n: 6;
+
+    .loop (@i) when (@i < @n + 1) {
+
+      &:nth-of-type(@{i}) {
+        animation-delay: (80ms * @i);
+      }
+
+      .loop(@i + 1);
     }
 
-    &:nth-of-type(2) {
-      animation-delay: 160ms;
-      // animation-delay: 19.5s;
-    }
-
-    &:nth-of-type(3) {
-      animation-delay: 240ms;
-      // animation-delay: 21s;
-    }
-
-    &:nth-of-type(4) {
-      animation-delay: 320ms;
-      // animation-delay: 22.5s;
-    }
-
-    &:nth-of-type(5) {
-      animation-delay: 400ms;
-      // animation-delay: 24s;
-    }
-
-    &:nth-of-type(6) {
-      animation-delay: 480ms;
-      // animation-delay: 25.5s;
-    }
+    .loop(1);
 
     ul {
       list-style: none;
@@ -154,7 +136,7 @@ h2, footer, article p {
   }
 }
 
-// wtf
+// WTF
 @media screen and (max-width: 240px) {
 
   :root * {
@@ -167,7 +149,7 @@ h2, footer, article p {
   }
 }
 
-// iphone
+// iPhone
 @media (max-device-width: 480px) {
 
   :root {
@@ -176,7 +158,7 @@ h2, footer, article p {
   }
 }
 
-// ios
+// iOS
 @media (max-device-width: 480px), (min-device-width: 768px) and (max-device-width: 1024px) {
   // invert color switcher for images and videos, not implemented yet
   // :root { -webkit-filter: invert(100%); }
