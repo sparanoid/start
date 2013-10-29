@@ -44,12 +44,12 @@ module.exports = (grunt) ->
 
       test:
         files:
-          src: ["<%= core.app %>/assets/coffee/main.coffee"]
+          src: ["<%= core.app %>/assets/coffee/app.coffee"]
 
     recess:
       test:
         files:
-          src: ["<%= core.app %>/assets/less/main.less"]
+          src: ["<%= core.app %>/assets/less/app.less"]
 
     connect:
       options:
@@ -98,11 +98,11 @@ module.exports = (grunt) ->
           sourceMap: true
 
         files:
-          ".tmp/assets/js/main.js": ["<%= core.app %>/assets/coffee/main.coffee"]
+          ".tmp/assets/js/app.js": ["<%= core.app %>/assets/coffee/app.coffee"]
 
       dist:
         files:
-          "<%= core.dist %>/assets/js/main.js": ["<%= core.app %>/assets/coffee/main.coffee"]
+          "<%= core.dist %>/assets/js/app.js": ["<%= core.app %>/assets/coffee/app.coffee"]
 
     less:
       server:
@@ -111,23 +111,23 @@ module.exports = (grunt) ->
           # dumpLineNumbers: "all"
 
         files:
-          ".tmp/assets/css/main.css": ["<%= core.app %>/assets/less/main.less"]
+          ".tmp/assets/css/app.css": ["<%= core.app %>/assets/less/app.less"]
 
       dist:
         options:
           paths: ["<%= core.app %>"]
 
         files:
-          "<%= core.dist %>/assets/css/main.css": ["<%= core.app %>/assets/less/main.less"]
+          "<%= core.dist %>/assets/css/app.css": ["<%= core.app %>/assets/less/app.less"]
 
     autoprefixer:
       server:
         files:
-          ".tmp/assets/css/main.css": [".tmp/assets/css/main.css"]
+          ".tmp/assets/css/app.css": [".tmp/assets/css/app.css"]
 
       dist:
         files:
-          "<%= core.dist %>/assets/css/main.css": ["<%= core.dist %>/assets/css/main.css"]
+          "<%= core.dist %>/assets/css/app.css": ["<%= core.dist %>/assets/css/app.css"]
 
     htmlmin:
       dist:
@@ -158,7 +158,7 @@ module.exports = (grunt) ->
           report: "gzip"
 
         files:
-          "<%= core.dist %>/assets/css/main.css": ["<%= core.dist %>/assets/css/main.css"]
+          "<%= core.dist %>/assets/css/app.css": ["<%= core.dist %>/assets/css/app.css"]
 
     imagemin:
       server:
@@ -182,7 +182,7 @@ module.exports = (grunt) ->
           report: "gzip"
 
         files:
-          "<%= core.dist %>/assets/js/main.js": ["<%= core.dist %>/assets/js/main.js"]
+          "<%= core.dist %>/assets/js/app.js": ["<%= core.dist %>/assets/js/app.js"]
 
     copy:
       sync:
