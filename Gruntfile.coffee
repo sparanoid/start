@@ -231,6 +231,12 @@ module.exports = (grunt) ->
           src: [".tmp", "<%= config.dist %>/*"]
         ]
 
+      postDist:
+        src: [
+          "<%= config.dist %>/assets/css/"
+          "<%= config.dist %>/assets/js/"
+        ]
+
       sync:
         options:
           force: true
@@ -269,6 +275,7 @@ module.exports = (grunt) ->
     "concurrent:dist"
     "smoosher"
     "usebanner"
+    "clean:postDist"
   ]
 
   grunt.registerTask "sync", [
