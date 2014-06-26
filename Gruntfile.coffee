@@ -198,6 +198,19 @@ module.exports = (grunt) ->
           dest: "<%= core.dist %>/assets/js/"
         ]
 
+    smoosher:
+      options:
+        jsDir: "<%= core.dist %>"
+        cssDir: "<%= core.dist %>"
+
+      dist:
+        files: [
+          expand: true
+          cwd: "<%= core.dist %>"
+          src: "**/*.html"
+          dest: "<%= core.dist %>/"
+        ]
+
     copy:
       sync:
         files: [
@@ -233,8 +246,33 @@ module.exports = (grunt) ->
       dist:
         tasks: ["htmlmin", "cssmin", "imagemin:dist", "uglify"]
 
-  grunt.registerTask "serve", ["connect:livereload", "concurrent:server", "autoprefixer:server", "watch"]
-  grunt.registerTask "test", ["build"]
-  grunt.registerTask "build", ["clean:dist", "coffeelint", "less:dist", "autoprefixer:dist", "coffee:dist", "concurrent:dist"]
-  grunt.registerTask "sync", ["build", "clean:sync", "copy:sync"]
-  grunt.registerTask "default", ["build"]
+  grunt.registerTask "serve", [
+    "connect:livereload"
+    "concurrent:server"
+    "autoprefixer:server"
+    "watch"
+  ]
+
+  grunt.registerTask "test", [
+    "build"
+  ]
+
+  grunt.registerTask "build", [
+    "clean:dist"
+    "coffeelint"
+    "less:dist"
+    "autoprefixer:dist"
+    "coffee:dist"
+    "concurrent:dist"
+    "smoosher:dist"
+  ]
+
+  grunt.registerTask "sync", [
+    "build"
+    "clean:sync"
+    "copy:sync"
+  ]
+
+  grunt.registerTask "default", [
+    "build"
+  ]
