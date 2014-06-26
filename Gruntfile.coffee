@@ -219,7 +219,7 @@ module.exports = (grunt) ->
       dist:
         tasks: ["htmlmin", "cssmin", "imagemin:dist", "uglify"]
 
-  grunt.registerTask "server", ["connect:livereload", "concurrent:server", "autoprefixer:server", "watch"]
+  grunt.registerTask "serve", ["connect:livereload", "concurrent:server", "autoprefixer:server", "watch"]
   grunt.registerTask "test", ["coffeelint", "recess"]
   grunt.registerTask "build", ["clean:dist", "test", "less:dist", "autoprefixer:dist", "coffee:dist", "concurrent:dist"]
   grunt.registerTask "sync", ["build", "clean:sync", "copy:sync"]
