@@ -80,7 +80,7 @@ module.exports = (grunt) ->
 
       coffee:
         files: ["<%= coffeelint.test.files.src %>"]
-        tasks: ["coffeelint"]
+        tasks: ["coffeelint", "coffee"]
 
       less:
         files: ["<%= recess.test.files.src %>"]
