@@ -7,26 +7,22 @@ mountFolder = (connect, dir) ->
 module.exports = (grunt) ->
 
   # Load all grunt tasks
-  matchdep = require("matchdep")
-  matchdep.filterDev("grunt-*").forEach grunt.loadNpmTasks
-
-  # Configurable paths
-  coreConfig =
-    pkg: grunt.file.readJSON("package.json")
-    app: "app"
-    dist: "dist"
-    banner: do ->
-      banner = "/*!\n"
-      banner += " * (c) <%= core.pkg.author %>.\n *\n"
-      banner += " * <%= core.pkg.name %> - v<%= core.pkg.version %> (<%= grunt.template.today('mm-dd-yyyy') %>)\n"
-      banner += " * <%= core.pkg.homepage %>\n"
-      banner += " * <%= core.pkg.license.type %> - <%= core.pkg.license.url %>\n"
-      banner += " */"
-      banner
+  require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
 
   # Project configurations
   grunt.initConfig
-    core: coreConfig
+    config:
+      pkg: grunt.file.readJSON("package.json")
+      app: "app"
+      dist: "dist"
+      banner: do ->
+        banner = "<!--\n"
+        banner += " © <%= config.pkg.author %>.\n\n"
+        banner += " <%= config.pkg.name %> - v<%= config.pkg.version %> (<%= grunt.template.today('mm-dd-yyyy') %>)\n"
+        banner += " <%= config.pkg.homepage %>\n"
+        banner += " <%= config.pkg.license %>\n"
+        banner += " -->"
+        banner
 
     coffeelint:
       options:
@@ -44,12 +40,12 @@ module.exports = (grunt) ->
 
       test:
         files:
-          src: ["<%= core.app %>/assets/coffee/app.coffee"]
+          src: ["<%= config.app %>/assets/coffee/app.coffee"]
 
     recess:
       test:
         files:
-          src: ["<%= core.app %>/assets/less/app.less"]
+          src: ["<%= config.app %>/assets/less/app.less"]
 
     connect:
       options:
@@ -83,14 +79,14 @@ module.exports = (grunt) ->
         tasks: ["coffeelint:test", "coffee"]
 
       less:
-        files: ["<%= core.app %>/assets/less/app.less"]
+        files: ["<%= config.app %>/assets/less/app.less"]
         tasks: ["less:server", "autoprefixer:server"]
 
       livereload:
         options:
           livereload: LIVERELOAD_PORT
 
-        files: ["<%= core.app %>/*.html", "{.tmp,<%= core.app %>}/assets/css/{,*/}*.css", "{.tmp,<%= core.app %>}/assets/js/{,*/}*.js", "<%= core.app %>/assets/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
+        files: ["<%= config.app %>/*.html", "{.tmp,<%= config.app %>}/assets/css/{,*/}*.css", "{.tmp,<%= config.app %>}/assets/js/{,*/}*.js", "<%= config.app %>/assets/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"]
 
     coffee:
       server:
@@ -98,11 +94,11 @@ module.exports = (grunt) ->
           sourceMap: true
 
         files:
-          ".tmp/assets/js/app.js": ["<%= core.app %>/assets/coffee/app.coffee"]
+          ".tmp/assets/js/app.js": ["<%= config.app %>/assets/coffee/app.coffee"]
 
       dist:
         files:
-          "<%= core.dist %>/assets/js/app.js": ["<%= core.app %>/assets/coffee/app.coffee"]
+          "<%= config.dist %>/assets/js/app.js": ["<%= config.app %>/assets/coffee/app.coffee"]
 
     less:
       server:
@@ -113,12 +109,12 @@ module.exports = (grunt) ->
           sourceMapURL: "app.css.map"
           sourceMapFilename: ".tmp/assets/css/app.css.map"
 
-        src: ["<%= core.app %>/assets/less/app.less"]
+        src: ["<%= config.app %>/assets/less/app.less"]
         dest: ".tmp/assets/css/app.css"
 
       dist:
         src: ["<%= less.server.src %>"]
-        dest: "<%= core.dist %>/assets/css/app.css"
+        dest: "<%= config.dist %>/assets/css/app.css"
 
     autoprefixer:
       server:
@@ -152,22 +148,21 @@ module.exports = (grunt) ->
 
         files: [
           expand: true
-          cwd: "<%= core.app %>"
+          cwd: "<%= config.app %>"
           src: "**/*.html"
-          dest: "<%= core.dist %>/"
+          dest: "<%= config.dist %>/"
         ]
 
     cssmin:
       dist:
         options:
-          banner: "<%= core.banner %>"
           report: "gzip"
 
         files: [
           expand: true
-          cwd: "<%= core.dist %>/assets/css/"
+          cwd: "<%= config.dist %>/assets/css/"
           src: ["*.css", "!*.min.css"]
-          dest: "<%= core.dist %>/assets/css/"
+          dest: "<%= config.dist %>/assets/css/"
         ]
 
     imagemin:
@@ -176,56 +171,64 @@ module.exports = (grunt) ->
           optimizationLevel: 0
 
         files:
-          ".tmp/assets/img/icon.png": "<%= core.app %>/assets/img/icon.png"
+          ".tmp/assets/img/icon.png": "<%= config.app %>/assets/img/icon.png"
 
       dist:
         options:
           optimizationLevel: 7
 
         files:
-          "<%= core.dist %>/assets/img/icon.png": "<%= core.app %>/assets/img/icon.png"
+          "<%= config.dist %>/assets/img/icon.png": "<%= config.app %>/assets/img/icon.png"
 
     uglify:
       dist:
         options:
-          banner: "<%= core.banner %>"
           report: "gzip"
 
         files: [
           expand: true
-          cwd: "<%= core.dist %>/assets/js/"
+          cwd: "<%= config.dist %>/assets/js/"
           src: ["*.js", "!*.min.js"]
-          dest: "<%= core.dist %>/assets/js/"
+          dest: "<%= config.dist %>/assets/js/"
         ]
 
     smoosher:
       options:
-        jsDir: "<%= core.dist %>"
-        cssDir: "<%= core.dist %>"
+        jsDir: "<%= config.dist %>"
+        cssDir: "<%= config.dist %>"
 
       dist:
         files: [
           expand: true
-          cwd: "<%= core.dist %>"
+          cwd: "<%= config.dist %>"
           src: "**/*.html"
-          dest: "<%= core.dist %>/"
+          dest: "<%= config.dist %>/"
         ]
+
+    usebanner:
+      options:
+        position: "bottom"
+        banner: "<%= config.banner %>"
+
+      dist:
+        files:
+          src: ["<%= config.dist %>/**/*.html"]
 
     copy:
       sync:
         files: [
           expand: true
           dot: true
-          cwd: "<%= core.dist %>/"
+          cwd: "<%= config.dist %>/"
           src: ["**"]
-          dest: "/Users/sparanoid/Dropbox/Sites/sparanoid.com/lab/<%= core.pkg.name %>/"
+          dest: "/Users/sparanoid/Dropbox/Sites/sparanoid.com/lab/<%= config.pkg.name %>/"
         ]
 
     clean:
       dist:
         files: [
           dot: true
-          src: [".tmp", "<%= core.dist %>/*"]
+          src: [".tmp", "<%= config.dist %>/*"]
         ]
 
       sync:
@@ -233,7 +236,7 @@ module.exports = (grunt) ->
           force: true
 
         files: [
-          src: "/Users/sparanoid/Dropbox/Sites/sparanoid.com/lab/<%= core.pkg.name %>/"
+          src: "/Users/sparanoid/Dropbox/Sites/sparanoid.com/lab/<%= config.pkg.name %>/"
         ]
 
     concurrent:
@@ -264,7 +267,8 @@ module.exports = (grunt) ->
     "autoprefixer:dist"
     "coffee:dist"
     "concurrent:dist"
-    "smoosher:dist"
+    "smoosher"
+    "usebanner"
   ]
 
   grunt.registerTask "sync", [

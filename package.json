@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/sparanoid/sparanoid-start.git"
+    "url": "git://github.com/sparanoid/start.git"
   },
   "keywords": [
     "less",
@@ -23,6 +23,7 @@
     "connect-livereload": "^0.3.2",
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^0.7.6",
+    "grunt-banner": "^0.2.3",
     "grunt-coffeelint": "0.0.10",
     "grunt-concurrent": "^0.4.3",
     "grunt-contrib-clean": "~0.5.0",
