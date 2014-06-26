@@ -76,15 +76,15 @@ module.exports = (grunt) ->
     watch:
       grunt:
         files: ["<%= coffeelint.gruntfile.files.src %>"]
-        tasks: ["coffeelint"]
+        tasks: ["coffeelint:gruntfile"]
 
       coffee:
         files: ["<%= coffeelint.test.files.src %>"]
-        tasks: ["coffeelint", "coffee"]
+        tasks: ["coffeelint:test", "coffee"]
 
       less:
-        files: ["<%= recess.test.files.src %>"]
-        tasks: ["less:server", "recess", "autoprefixer:server"]
+        files: ["<%= core.app %>/assets/less/app.less"]
+        tasks: ["less:server", "autoprefixer:server"]
 
       livereload:
         options:
@@ -107,27 +107,27 @@ module.exports = (grunt) ->
     less:
       server:
         options:
-          paths: ["<%= core.app %>"]
-          # dumpLineNumbers: "all"
+          strictMath: true
+          sourceMap: true
+          outputSourceFiles: true
+          sourceMapURL: "app.css.map"
+          sourceMapFilename: ".tmp/assets/css/app.css.map"
 
-        files:
-          ".tmp/assets/css/app.css": ["<%= core.app %>/assets/less/app.less"]
+        src: ["<%= core.app %>/assets/less/app.less"]
+        dest: ".tmp/assets/css/app.css"
 
       dist:
-        options:
-          paths: ["<%= core.app %>"]
-
-        files:
-          "<%= core.dist %>/assets/css/app.css": ["<%= core.app %>/assets/less/app.less"]
+        src: ["<%= less.server.src %>"]
+        dest: "<%= core.dist %>/assets/css/app.css"
 
     autoprefixer:
       server:
-        files:
-          ".tmp/assets/css/app.css": [".tmp/assets/css/app.css"]
+        src: ["<%= less.server.dest %>"]
+        dest: "<%= less.server.dest %>"
 
       dist:
-        files:
-          "<%= core.dist %>/assets/css/app.css": ["<%= core.dist %>/assets/css/app.css"]
+        src: ["<%= less.dist.dest %>"]
+        dest: "<%= less.dist.dest %>"
 
     htmlmin:
       dist:
@@ -136,13 +136,19 @@ module.exports = (grunt) ->
           removeCommentsFromCDATA: true
           removeCDATASectionsFromCDATA: true
           collapseWhitespace: true
+          conservativeCollapse: true
           collapseBooleanAttributes: true
-          removeAttributeQuotes: true
+          removeAttributeQuotes: false
           removeRedundantAttributes: true
           useShortDoctype: false
           removeEmptyAttributes: true
-          removeOptionalTags: false
+          removeOptionalTags: true
           removeEmptyElements: false
+          lint: false
+          keepClosingSlash: true
+          caseSensitive: true
+          minifyJS: true
+          minifyCSS: true
 
         files: [
           expand: true
@@ -157,8 +163,12 @@ module.exports = (grunt) ->
           banner: "<%= core.banner %>"
           report: "gzip"
 
-        files:
-          "<%= core.dist %>/assets/css/app.css": ["<%= core.dist %>/assets/css/app.css"]
+        files: [
+          expand: true
+          cwd: "<%= core.dist %>/assets/css/"
+          src: ["*.css", "!*.min.css"]
+          dest: "<%= core.dist %>/assets/css/"
+        ]
 
     imagemin:
       server:
@@ -181,8 +191,12 @@ module.exports = (grunt) ->
           banner: "<%= core.banner %>"
           report: "gzip"
 
-        files:
-          "<%= core.dist %>/assets/js/app.js": ["<%= core.dist %>/assets/js/app.js"]
+        files: [
+          expand: true
+          cwd: "<%= core.dist %>/assets/js/"
+          src: ["*.js", "!*.min.js"]
+          dest: "<%= core.dist %>/assets/js/"
+        ]
 
     copy:
       sync:
@@ -220,7 +234,7 @@ module.exports = (grunt) ->
         tasks: ["htmlmin", "cssmin", "imagemin:dist", "uglify"]
 
   grunt.registerTask "serve", ["connect:livereload", "concurrent:server", "autoprefixer:server", "watch"]
-  grunt.registerTask "test", ["coffeelint", "recess"]
-  grunt.registerTask "build", ["clean:dist", "test", "less:dist", "autoprefixer:dist", "coffee:dist", "concurrent:dist"]
+  grunt.registerTask "test", ["build"]
+  grunt.registerTask "build", ["clean:dist", "coffeelint", "less:dist", "autoprefixer:dist", "coffee:dist", "concurrent:dist"]
   grunt.registerTask "sync", ["build", "clean:sync", "copy:sync"]
   grunt.registerTask "default", ["build"]
