@@ -42,11 +42,6 @@ module.exports = (grunt) ->
         files:
           src: ["<%= config.app %>/assets/coffee/app.coffee"]
 
-    recess:
-      test:
-        files:
-          src: ["<%= config.app %>/assets/less/app.less"]
-
     connect:
       options:
         port: 9000
