@@ -112,13 +112,13 @@ h2, footer, article p {
 
     @n: 6;
 
-    .loop (@i) when (@i < @n + 1) {
+    .loop (@i) when (@i < (@n + 1)) {
 
       &:nth-of-type(@{i}) {
-        animation-delay: (80ms * @i);
+        animation-delay: ((80ms * @i));
       }
 
-      .loop(@i + 1);
+      .loop((@i + 1));
     }
 
     .loop(1);
