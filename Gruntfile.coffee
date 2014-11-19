@@ -160,21 +160,6 @@ module.exports = (grunt) ->
           dest: "<%= config.dist %>/assets/css/"
         ]
 
-    imagemin:
-      server:
-        options:
-          optimizationLevel: 0
-
-        files:
-          ".tmp/assets/img/icon.png": "<%= config.app %>/assets/img/icon.png"
-
-      dist:
-        options:
-          optimizationLevel: 7
-
-        files:
-          "<%= config.dist %>/assets/img/icon.png": "<%= config.app %>/assets/img/icon.png"
-
     uglify:
       dist:
         options:
@@ -227,10 +212,7 @@ module.exports = (grunt) ->
         ]
 
       postDist:
-        src: [
-          "<%= config.dist %>/assets/css/"
-          "<%= config.dist %>/assets/js/"
-        ]
+        src: ["<%= config.dist %>/assets/"]
 
       sync:
         options:
@@ -245,10 +227,10 @@ module.exports = (grunt) ->
         logConcurrentOutput: true
 
       server:
-        tasks: ["less:server", "coffee:server", "imagemin:server"]
+        tasks: ["less:server", "coffee:server"]
 
       dist:
-        tasks: ["htmlmin", "cssmin", "imagemin:dist", "uglify"]
+        tasks: ["htmlmin", "cssmin", "uglify"]
 
   grunt.registerTask "serve", [
     "connect:livereload"
