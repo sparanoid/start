@@ -201,7 +201,7 @@ module.exports = (grunt) ->
           dot: true
           cwd: "<%= config.dist %>/"
           src: ["**"]
-          dest: "/Users/sparanoid/Dropbox/Sites/sparanoid.com/lab/<%= config.pkg.name %>/"
+          dest: "/Users/sparanoid/Workspace/Sites/sparanoid.com/lab/<%= config.pkg.name %>/"
         ]
 
     clean:
@@ -219,7 +219,7 @@ module.exports = (grunt) ->
           force: true
 
         files: [
-          src: "/Users/sparanoid/Dropbox/Sites/sparanoid.com/lab/<%= config.pkg.name %>/"
+          src: "/Users/sparanoid/Workspace/Sites/sparanoid.com/lab/<%= config.pkg.name %>/"
         ]
 
     concurrent:
