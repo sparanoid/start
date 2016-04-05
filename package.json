@@ -21,7 +21,7 @@
   "gitHead": "0cccfdd9e42532b7894b47429c96ae15d6c31d7a",
   "devDependencies": {
     "connect-livereload": "^0.3.2",
-    "grunt": "^0.4.5",
+    "grunt": "^1.0.1",
     "grunt-autoprefixer": "^0.7.6",
     "grunt-banner": "^0.2.3",
     "grunt-coffeelint": "0.0.10",
