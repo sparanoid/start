@@ -20,7 +20,7 @@
   "readmeFilename": "README.md",
   "gitHead": "0cccfdd9e42532b7894b47429c96ae15d6c31d7a",
   "devDependencies": {
-    "connect-livereload": "^0.3.2",
+    "connect-livereload": "^0.6.0",
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^0.7.6",
     "grunt-banner": "^0.2.3",
